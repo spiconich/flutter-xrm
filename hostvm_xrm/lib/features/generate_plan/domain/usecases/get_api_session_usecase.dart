@@ -1,10 +1,10 @@
 import 'package:hostvm_xrm/features/generate_plan/domain/repositories/generate_plan_repository.dart';
 import 'package:hostvm_xrm/features/generate_plan/data/models/session_response_dto.dart';
 
-class AuthenticateApiUseCase {
+class GetApiSessionUseCase {
   final GeneratePlanRepository repository;
 
-  AuthenticateApiUseCase(this.repository);
+  GetApiSessionUseCase(this.repository);
 
   Future<SessionResponseDto> call(
     String username,

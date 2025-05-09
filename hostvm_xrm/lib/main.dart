@@ -15,7 +15,7 @@ void main() {
       home: BlocProvider(
         create:
             (context) => GeneratePlanBloc(
-              AuthenticateApiUseCase(
+              GetApiSessionUseCase(
                 GeneratePlanRepositoryImpl(GeneratePlanRemoteDataSource(dio)),
               ),
             ),

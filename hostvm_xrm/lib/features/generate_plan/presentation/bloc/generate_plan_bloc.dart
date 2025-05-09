@@ -6,7 +6,7 @@ part '../events/generate_plan_event.dart';
 part '../states/generate_plan_state.dart';
 
 class GeneratePlanBloc extends Bloc<GeneratePlanEvent, GeneratePlanState> {
-  final AuthenticateApiUseCase authenticateApiUseCase;
+  final GetApiSessionUseCase authenticateApiUseCase;
   String? sessionId;
 
   GeneratePlanBloc(this.authenticateApiUseCase) : super(GeneratePlanInitial()) {
