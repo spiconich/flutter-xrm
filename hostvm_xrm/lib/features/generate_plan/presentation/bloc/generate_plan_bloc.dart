@@ -1,12 +1,12 @@
 import 'package:hostvm_xrm/features/generate_plan/data/models/session_response_dto.dart';
-import 'package:hostvm_xrm/features/generate_plan/domain/usecases/authenticate_api_usecase.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/usecases/get_api_session_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part '../events/generate_plan_event.dart';
 part '../states/generate_plan_state.dart';
 
 class GeneratePlanBloc extends Bloc<GeneratePlanEvent, GeneratePlanState> {
-  final AuthenticateApiUseCase authenticateApiUseCase;
+  final GetApiSessionUseCase authenticateApiUseCase;
   String? sessionId;
 
   GeneratePlanBloc(this.authenticateApiUseCase) : super(GeneratePlanInitial()) {
