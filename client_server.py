@@ -19,6 +19,7 @@ active_clients = {}  # {session_id: Client}
 
 @app.route('/api/init_session', methods=['POST', 'OPTIONS'])
 def init():
+    print(request)
     if request.method == 'OPTIONS':
         return _build_cors_preflight_response()
     
@@ -40,6 +41,7 @@ def init():
 
 @app.route('/api/call', methods=['POST', 'OPTIONS'])
 def call_method():
+    print(request)
     if request.method == 'OPTIONS':
         return _build_cors_preflight_response()
     
