@@ -10,12 +10,12 @@ class GeneratePlanRepositoryImpl implements GeneratePlanRepository {
   GeneratePlanRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<SessionResponseDto> initializeSession(
-    String host,
-    String auth,
-    String username,
-    String password,
-  ) async {
+  Future<SessionResponseDto> initializeSession({
+    required String host,
+    required String auth,
+    required String username,
+    required String password,
+  }) async {
     return remoteDataSource.initializeSession(
       SessionRequestDto(
         host: host,

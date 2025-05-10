@@ -6,17 +6,17 @@ class GetApiSessionUseCase {
 
   GetApiSessionUseCase(this.repository);
 
-  Future<SessionResponseDto> call(
-    String username,
-    String password,
-    String auth,
-    String host,
-  ) async {
+  Future<SessionResponseDto> call({
+    required String username,
+    required String password,
+    required String auth,
+    required String host,
+  }) async {
     return repository.initializeSession(
-      host = host,
-      username = username,
-      auth = auth,
-      host = host,
+      host: host,
+      username: username,
+      auth: auth,
+      password: password,
     );
   }
 }
