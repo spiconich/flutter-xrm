@@ -30,20 +30,24 @@ class GeneratePlanPage extends StatelessWidget {
               children: [
                 TextField(
                   controller: _hostController,
-                  decoration: const InputDecoration(labelText: 'Broker URL'),
+                  decoration: const InputDecoration(labelText: 'URL брокера'),
                 ),
                 TextField(
                   controller: _usernameController,
-                  decoration: const InputDecoration(labelText: 'Username'),
+                  decoration: const InputDecoration(
+                    labelText: 'Имя пользователя',
+                  ),
                 ),
                 TextField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(labelText: 'Password'),
+                  decoration: const InputDecoration(labelText: 'Пароль'),
                 ),
                 TextField(
                   controller: _authController,
-                  decoration: const InputDecoration(labelText: 'Authenticator'),
+                  decoration: const InputDecoration(
+                    labelText: 'Аутентификатор',
+                  ),
                 ),
                 const SizedBox(height: 20),
                 if (state is GeneratePlanLoading)
@@ -60,7 +64,7 @@ class GeneratePlanPage extends StatelessWidget {
                         ),
                       );
                     },
-                    child: const Text('Initialize Session'),
+                    child: const Text('Запросить'),
                   ),
               ],
             ),
