@@ -19,6 +19,9 @@ class GeneratePlanPage extends StatelessWidget {
               context,
             ).showSnackBar(SnackBar(content: Text(state.message)));
           }
+          if (state is SessionInitialized) {
+            context.read<GeneratePlanBloc>().add(BrokerLoginEvent());
+          }
         },
         builder: (context, state) {
           return Padding(
@@ -58,17 +61,6 @@ class GeneratePlanPage extends StatelessWidget {
                       );
                     },
                     child: const Text('Initialize Session'),
-                  ),
-                if (state is GeneratePlanSuccess)
-                  Column(
-                    children: [
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Session initialized successfully!',
-                        style: TextStyle(color: Colors.green),
-                      ),
-                      Text('Session ID: ${state.sessionResponse.sessionId}'),
-                    ],
                   ),
               ],
             ),

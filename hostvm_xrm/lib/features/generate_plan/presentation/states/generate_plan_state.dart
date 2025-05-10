@@ -6,10 +6,16 @@ final class GeneratePlanInitial extends GeneratePlanState {}
 
 final class GeneratePlanLoading extends GeneratePlanState {}
 
-final class GeneratePlanSuccess extends GeneratePlanState {
+final class SessionInitialized extends GeneratePlanState {
   final SessionResponseDto sessionResponse;
 
-  GeneratePlanSuccess(this.sessionResponse);
+  SessionInitialized(this.sessionResponse);
+}
+
+final class BrokerLogged extends GeneratePlanState {
+  final BrokerLoginResponseDto brokerLoginResponse;
+
+  BrokerLogged(this.brokerLoginResponse);
 }
 
 final class GeneratePlanError extends GeneratePlanState {

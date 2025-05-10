@@ -1,3 +1,4 @@
+import 'package:hostvm_xrm/features/generate_plan/data/models/broker_login_response_dto.dart';
 import 'package:hostvm_xrm/features/generate_plan/data/models/session_response_dto.dart';
 
 abstract class GeneratePlanRepository {
@@ -7,4 +8,6 @@ abstract class GeneratePlanRepository {
     String username,
     String password,
   );
+
+  Future<BrokerLoginResponseDto> brokerLogin();
 }
