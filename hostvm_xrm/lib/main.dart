@@ -13,6 +13,7 @@ void main() {
   final generatePlanRemoteDataSource = GeneratePlanRemoteDataSource(dio);
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: BlocProvider(
         create:
             (context) => GeneratePlanBloc(
