@@ -31,7 +31,6 @@ class GeneratePlanRemoteDataSource {
       if (response.statusCode == 200) {
         final authResponse = SessionResponseDto.fromJson(response.data);
         _sessionId = authResponse.sessionId; // Сохраняем session_id
-        print('Session ID: $_sessionId');
         return authResponse;
       }
       throw Exception('Failed to initialize session');
