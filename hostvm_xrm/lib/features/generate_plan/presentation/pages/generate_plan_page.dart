@@ -11,7 +11,7 @@ class GeneratePlanPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Initialize Session')),
+      appBar: AppBar(title: const Text('Генерация плана')),
       body: BlocConsumer<GeneratePlanBloc, GeneratePlanState>(
         listener: (context, state) {
           if (state is GeneratePlanError) {
