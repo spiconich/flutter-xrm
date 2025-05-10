@@ -27,10 +27,10 @@ class GeneratePlanBloc extends Bloc<GeneratePlanEvent, GeneratePlanState> {
     emit(GeneratePlanLoading());
     try {
       final sessionResponse = await getApiSessionUseCase(
-        event.username,
-        event.password,
-        event.auth,
-        event.host,
+        auth: event.auth,
+        host: event.host,
+        username: event.username,
+        password: event.password,
       );
       sessionId = sessionResponse.sessionId;
       emit(SessionInitialized(sessionResponse));
