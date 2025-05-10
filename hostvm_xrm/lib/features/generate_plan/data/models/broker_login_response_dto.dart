@@ -1,9 +1,13 @@
 class BrokerLoginResponseDto {
-  final String result;
+  final String status;
+  final String? result;
 
-  BrokerLoginResponseDto({required this.result});
+  BrokerLoginResponseDto({required this.result, required this.status});
 
   factory BrokerLoginResponseDto.fromJson(Map<String, dynamic> json) {
-    return BrokerLoginResponseDto(result: json['status']);
+    return BrokerLoginResponseDto(
+      result: json['result'],
+      status: json['status'],
+    );
   }
 }
