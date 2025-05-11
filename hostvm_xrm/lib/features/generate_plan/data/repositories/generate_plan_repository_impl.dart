@@ -1,4 +1,5 @@
 import 'package:hostvm_xrm/features/generate_plan/data/models/broker_login_response_dto.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/authenticator_entity.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/repositories/generate_plan_repository.dart';
 import 'package:hostvm_xrm/features/generate_plan/data/datasources/generate_plan_remote_data_source.dart';
 import 'package:hostvm_xrm/features/generate_plan/data/models/session_request_dto.dart';
@@ -29,5 +30,11 @@ class GeneratePlanRepositoryImpl implements GeneratePlanRepository {
   @override
   Future<BrokerLoginResponseDto> brokerLogin() async {
     return remoteDataSource.brokerLogin();
+  }
+
+  @override
+  Future<List<AuthenticatorEntity>> getAllAuths() async {
+    final dto = await remoteDataSource.getAllAuths();
+    return dto.result.map((authDto) => authDto.toEntity()).toList();
   }
 }

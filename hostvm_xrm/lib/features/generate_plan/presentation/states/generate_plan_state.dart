@@ -6,6 +6,8 @@ final class GeneratePlanInitial extends GeneratePlanState {}
 
 final class GeneratePlanLoading extends GeneratePlanState {}
 
+final class AllAuthsLoading extends GeneratePlanState {}
+
 final class SessionInitialized extends GeneratePlanState {
   final SessionResponseDto sessionResponse;
 
@@ -16,6 +18,12 @@ final class BrokerLogged extends GeneratePlanState {
   final BrokerLoginResponseDto brokerLoginResponse;
 
   BrokerLogged(this.brokerLoginResponse);
+}
+
+final class GotAllAuths extends GeneratePlanState {
+  final List<AuthenticatorEntity> getAllAuthsResponse;
+
+  GotAllAuths(this.getAllAuthsResponse);
 }
 
 final class GeneratePlanError extends GeneratePlanState {

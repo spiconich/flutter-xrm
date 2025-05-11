@@ -17,3 +17,5 @@ class InitializeSessionEvent extends GeneratePlanEvent {
 }
 
 class BrokerLoginEvent extends GeneratePlanEvent {}
+
+class GetAllAuthsEvent extends GeneratePlanEvent {}

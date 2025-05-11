@@ -22,6 +22,9 @@ class GeneratePlanPage extends StatelessWidget {
           if (state is SessionInitialized) {
             context.read<GeneratePlanBloc>().add(BrokerLoginEvent());
           }
+          if (state is BrokerLogged) {
+            context.read<GeneratePlanBloc>().add(GetAllAuthsEvent());
+          }
         },
         builder: (context, state) {
           return Padding(
