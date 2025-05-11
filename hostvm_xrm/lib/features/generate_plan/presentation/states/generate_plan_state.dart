@@ -6,6 +6,8 @@ final class GeneratePlanInitial extends GeneratePlanState {}
 
 final class GeneratePlanLoading extends GeneratePlanState {}
 
+final class BrokerLoginLoading extends GeneratePlanState {}
+
 final class AllAuthsLoading extends GeneratePlanState {}
 
 final class SessionInitialized extends GeneratePlanState {

@@ -48,7 +48,7 @@ class GeneratePlanBloc extends Bloc<GeneratePlanEvent, GeneratePlanState> {
     BrokerLoginEvent event,
     Emitter<GeneratePlanState> emit,
   ) async {
-    emit(GeneratePlanLoading());
+    emit(BrokerLoginLoading());
     try {
       final brokerLoginResponse = await brokerLoginUseCase();
       emit(BrokerLogged(brokerLoginResponse));
