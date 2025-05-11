@@ -11,13 +11,13 @@ final class BrokerLoginLoading extends GeneratePlanState {}
 final class AllAuthsLoading extends GeneratePlanState {}
 
 final class SessionInitialized extends GeneratePlanState {
-  final SessionResponseDto sessionResponse;
+  final SessionEntity sessionResponse;
 
   SessionInitialized(this.sessionResponse);
 }
 
 final class BrokerLogged extends GeneratePlanState {
-  final BrokerLoginResponseDto brokerLoginResponse;
+  final BrokerLoginEntity brokerLoginResponse;
 
   BrokerLogged(this.brokerLoginResponse);
 }

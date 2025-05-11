@@ -1,6 +1,6 @@
-import 'package:hostvm_xrm/features/generate_plan/data/models/broker_login_response_dto.dart';
-import 'package:hostvm_xrm/features/generate_plan/data/models/session_response_dto.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/entities/authenticator_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/broker_login_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_entity.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/usecases/broker_login_usecase.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/usecases/get_all_auths_usecase.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/usecases/get_api_session_usecase.dart';

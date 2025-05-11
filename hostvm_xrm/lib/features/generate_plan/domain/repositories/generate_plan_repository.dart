@@ -1,16 +1,12 @@
-import 'package:hostvm_xrm/features/generate_plan/data/models/broker_login_response_dto.dart';
-import 'package:hostvm_xrm/features/generate_plan/data/models/session_response_dto.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/entities/authenticator_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/broker_login_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_init_params.dart';
 
 abstract class GeneratePlanRepository {
-  Future<SessionResponseDto> initializeSession({
-    required String host,
-    required String auth,
-    required String username,
-    required String password,
-  });
+  Future<SessionEntity> initializeSession(SessionInitParams params);
 
-  Future<BrokerLoginResponseDto> brokerLogin();
+  Future<BrokerLoginEntity> brokerLogin();
 
   Future<List<AuthenticatorEntity>> getAllAuths();
 }

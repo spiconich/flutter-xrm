@@ -1,9 +1,10 @@
-import 'package:hostvm_xrm/features/generate_plan/data/models/broker_login_response_dto.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/entities/authenticator_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/broker_login_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_init_params.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/repositories/generate_plan_repository.dart';
 import 'package:hostvm_xrm/features/generate_plan/data/datasources/generate_plan_remote_data_source.dart';
 import 'package:hostvm_xrm/features/generate_plan/data/models/session_request_dto.dart';
-import 'package:hostvm_xrm/features/generate_plan/data/models/session_response_dto.dart';
 
 class GeneratePlanRepositoryImpl implements GeneratePlanRepository {
   final GeneratePlanRemoteDataSource remoteDataSource;
@@ -11,30 +12,29 @@ class GeneratePlanRepositoryImpl implements GeneratePlanRepository {
   GeneratePlanRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<SessionResponseDto> initializeSession({
-    required String host,
-    required String auth,
-    required String username,
-    required String password,
-  }) async {
-    return remoteDataSource.initializeSession(
-      SessionRequestDto(
-        host: host,
-        username: username,
-        auth: auth,
-        password: password,
-      ),
+  Future<SessionEntity> initializeSession(SessionInitParams params) async {
+    final dto = SessionRequestDto(
+      host: params.host,
+      auth: params.auth,
+      username: params.username,
+      password: params.password,
+    );
+    final response = await remoteDataSource.initializeSession(dto);
+    return SessionEntity(
+      sessionId: response.sessionId,
+      status: response.status,
     );
   }
 
   @override
-  Future<BrokerLoginResponseDto> brokerLogin() async {
-    return remoteDataSource.brokerLogin();
+  Future<BrokerLoginEntity> brokerLogin() async {
+    final response = await remoteDataSource.brokerLogin();
+    return BrokerLoginEntity(status: response.status, result: response.result);
   }
 
   @override
   Future<List<AuthenticatorEntity>> getAllAuths() async {
-    final dto = await remoteDataSource.getAllAuths();
-    return dto.result.map((authDto) => authDto.toEntity()).toList();
+    final response = await remoteDataSource.getAllAuths();
+    return response.result.map((authDto) => authDto.toEntity()).toList();
   }
 }
