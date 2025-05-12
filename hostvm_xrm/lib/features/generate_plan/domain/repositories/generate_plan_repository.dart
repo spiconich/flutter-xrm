@@ -1,12 +1,12 @@
-import 'package:hostvm_xrm/features/generate_plan/domain/entities/authenticator_entity.dart';
-import 'package:hostvm_xrm/features/generate_plan/domain/entities/broker_login_entity.dart';
-import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_entity.dart';
-import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_init_params.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/authenticator_response_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/broker_login_response_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_response_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_request_entity.dart';
 
 abstract class GeneratePlanRepository {
-  Future<SessionEntity> initializeSession(SessionInitParams params);
+  Future<SessionResponseEntity> initializeSession(SessionRequestEntity params);
 
-  Future<BrokerLoginEntity> brokerLogin();
+  Future<BrokerLoginResponseEntity> brokerLogin();
 
-  Future<List<AuthenticatorEntity>> getAllAuths();
+  Future<List<AuthenticatorResponseEntity>> getAllAuths();
 }

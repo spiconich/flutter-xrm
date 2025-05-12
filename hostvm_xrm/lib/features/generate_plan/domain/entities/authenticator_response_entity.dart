@@ -1,4 +1,4 @@
-class AuthenticatorEntity {
+class AuthenticatorResponseEntity {
   final String comments;
   final String id;
   final String mfaId;
@@ -15,7 +15,7 @@ class AuthenticatorEntity {
   final int usersCount;
   final bool visible;
 
-  const AuthenticatorEntity({
+  const AuthenticatorResponseEntity({
     required this.comments,
     required this.id,
     required this.mfaId,

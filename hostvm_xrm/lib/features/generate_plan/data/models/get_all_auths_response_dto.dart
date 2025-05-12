@@ -1,4 +1,4 @@
-import 'package:hostvm_xrm/features/generate_plan/domain/entities/authenticator_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/entities/authenticator_response_entity.dart';
 
 class GetAllAuthsResponseDto {
   final String status;
@@ -72,8 +72,8 @@ class AuthenticatorDto {
     );
   }
 
-  AuthenticatorEntity toEntity() {
-    return AuthenticatorEntity(
+  AuthenticatorResponseEntity toEntity() {
+    return AuthenticatorResponseEntity(
       comments: comments,
       id: id,
       mfaId: mfaId,
