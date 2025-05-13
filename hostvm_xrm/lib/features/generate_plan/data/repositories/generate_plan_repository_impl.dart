@@ -1,13 +1,16 @@
+import 'package:hostvm_xrm/core/data/models/session_response_dto.dart';
+import 'package:hostvm_xrm/features/generate_plan/data/models/broker_login_response_dto.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/entities/authenticator_response_entity.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/entities/broker_login_response_entity.dart';
-import 'package:hostvm_xrm/core/domain/session_response_entity.dart';
-import 'package:hostvm_xrm/core/domain/session_request_entity.dart';
-import 'package:hostvm_xrm/features/generate_plan/domain/repositories/generate_plan_repository.dart';
-import 'package:hostvm_xrm/features/generate_plan/data/datasources/generate_plan_remote_data_source.dart';
-import 'package:hostvm_xrm/features/generate_plan/data/models/session_request_dto.dart';
+import 'package:hostvm_xrm/core/domain/entity/session_response_entity.dart';
+import 'package:hostvm_xrm/core/domain/entity/session_request_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/repositories/generate_plan_repository_interface.dart';
+import 'package:hostvm_xrm/features/generate_plan/data/datasources/generate_plan_remote_data_source_impl.dart';
+import 'package:hostvm_xrm/core/data/models/session_request_dto.dart';
+import 'package:hostvm_xrm/features/generate_plan/data/models/get_all_auths_response_dto.dart';
 
 class GeneratePlanRepositoryImpl implements GeneratePlanRepository {
-  final GeneratePlanRemoteDataSource remoteDataSource;
+  final GeneratePlanRemoteDataSourceImpl remoteDataSource;
 
   GeneratePlanRepositoryImpl(this.remoteDataSource);
 
@@ -21,7 +24,11 @@ class GeneratePlanRepositoryImpl implements GeneratePlanRepository {
       username: params.username,
       password: params.password,
     );
-    final response = await remoteDataSource.initializeSession(dto);
+    final json = await remoteDataSource.initializeSession(dto.toJson());
+    final response = SessionResponseDto(
+      sessionId: json['session_id'] as String,
+      status: json['status'] as String,
+    );
     return SessionResponseEntity(
       sessionId: response.sessionId,
       status: response.status,
@@ -30,7 +37,11 @@ class GeneratePlanRepositoryImpl implements GeneratePlanRepository {
 
   @override
   Future<BrokerLoginResponseEntity> brokerLogin() async {
-    final response = await remoteDataSource.brokerLogin();
+    final json = await remoteDataSource.brokerLogin();
+    final response = BrokerLoginResponseDto(
+      result: json['result'] as String?,
+      status: json['status'] as String,
+    );
     return BrokerLoginResponseEntity(
       status: response.status,
       result: response.result,
@@ -39,7 +50,28 @@ class GeneratePlanRepositoryImpl implements GeneratePlanRepository {
 
   @override
   Future<List<AuthenticatorResponseEntity>> getAllAuths() async {
-    final response = await remoteDataSource.getAllAuths();
-    return response.result.map((authDto) => authDto.toEntity()).toList();
+    final json = await remoteDataSource.getAllAuths();
+    final dtos = GetAllAuthsResponseDto.fromJson(json);
+    return dtos.result
+        .map(
+          (authData) => AuthenticatorResponseEntity(
+            comments: authData.comments,
+            id: authData.id,
+            mfaId: authData.mfaId,
+            mfaName: authData.mfaName,
+            name: authData.name,
+            numericId: authData.numericId,
+            permission: authData.permission,
+            priority: authData.priority,
+            smallName: authData.smallName,
+            tags: authData.tags,
+            type: authData.type,
+            typeInfo: authData.typeInfo,
+            typeName: authData.typeName,
+            usersCount: authData.usersCount,
+            visible: authData.visible,
+          ),
+        )
+        .toList();
   }
 }

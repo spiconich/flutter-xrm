@@ -1,4 +1,3 @@
-// Ответ от API при успешной инициализации сессии
 class SessionResponseDto {
   final String sessionId;
   final String status;

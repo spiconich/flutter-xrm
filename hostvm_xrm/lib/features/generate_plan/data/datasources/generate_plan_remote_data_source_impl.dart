@@ -1,48 +1,47 @@
 import 'package:dio/dio.dart';
 import 'package:hostvm_xrm/core/constants/flask_server_config.dart';
-import 'package:hostvm_xrm/features/generate_plan/data/models/broker_login_response_dto.dart';
-import 'package:hostvm_xrm/features/generate_plan/data/models/session_request_dto.dart';
-import 'package:hostvm_xrm/features/generate_plan/data/models/session_response_dto.dart';
-import 'package:hostvm_xrm/features/generate_plan/data/models/get_all_auths_response_dto.dart';
 import 'package:hostvm_xrm/core/constants/api_routes.dart';
 import 'package:hostvm_xrm/core/constants/api_methods.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/repositories/generate_plan_remote_data_source_interface.dart';
 
-class GeneratePlanRemoteDataSource {
+class GeneratePlanRemoteDataSourceImpl implements GeneratePlanRemoteDataSource {
   final Dio dio;
-  String? _sessionId; // Храним session_id для последующих запросов
+  String? _sessionId;
 
-  GeneratePlanRemoteDataSource(this.dio);
+  GeneratePlanRemoteDataSourceImpl(this.dio);
 
-  Future<SessionResponseDto> initializeSession(
-    SessionRequestDto authData,
+  @override
+  Future<Map<String, dynamic>> initializeSession(
+    Map<String, dynamic> authData,
   ) async {
     try {
       print("Отправлен запрос на инициализацию сессии");
+
       final response = await dio.post(
         '$flaskServerAddress:$flaskServerPort${ApiRoutes.apiInitSession}',
-        data: authData.toJson(),
-        options: Options(
-          validateStatus: (status) => status! < 600, // Принимаем все статусы
-        ),
+        data: authData,
+        options: Options(validateStatus: (status) => status! < 600),
       );
+
       print('''
-    Ответ:
-    Status: ${response.statusCode}
-    Headers: ${response.headers}
-    Data: ${response.data}
-    ''');
+      Ответ:
+      Status: ${response.statusCode}
+      Headers: ${response.headers}
+      Data: ${response.data}
+      ''');
+
       if (response.statusCode == 200) {
-        final authResponse = SessionResponseDto.fromJson(response.data);
-        _sessionId = authResponse.sessionId; // Сохраняем session_id
-        return authResponse;
+        _sessionId = response.data['session_id'] as String?;
+        return response.data;
       }
-      throw Exception('Failed to initialize session');
+      throw Exception('Failed to initialize session: ${response.statusCode}');
     } on DioException catch (e) {
       throw Exception('API Error: ${e.message}');
     }
   }
 
-  Future<BrokerLoginResponseDto> brokerLogin() async {
+  @override
+  Future<Map<String, dynamic>> brokerLogin() async {
     try {
       print(
         "Отправлен запрос выполнения метода ${ApiMethods.login} с session_id: $_sessionId",
@@ -51,9 +50,7 @@ class GeneratePlanRemoteDataSource {
       final response = await dio.post(
         '$flaskServerAddress:$flaskServerPort${ApiRoutes.apiCallMethod}',
         data: {'method': ApiMethods.login, 'session_id': _sessionId},
-        options: Options(
-          validateStatus: (status) => status! < 600, // Принимаем все статусы
-        ),
+        options: Options(validateStatus: (status) => status! < 600),
       );
 
       print('''
@@ -64,7 +61,7 @@ class GeneratePlanRemoteDataSource {
     ''');
 
       if (response.statusCode == 200) {
-        return BrokerLoginResponseDto.fromJson(response.data);
+        return response.data;
       }
 
       final errorMsg =
@@ -82,7 +79,8 @@ class GeneratePlanRemoteDataSource {
     }
   }
 
-  Future<GetAllAuthsResponseDto> getAllAuths() async {
+  @override
+  Future<Map<String, dynamic>> getAllAuths() async {
     try {
       print(
         "Отправлен запрос выполнения метода ${ApiMethods.listAuths} с session_id: $_sessionId",
@@ -91,9 +89,7 @@ class GeneratePlanRemoteDataSource {
       final response = await dio.post(
         '$flaskServerAddress:$flaskServerPort${ApiRoutes.apiCallMethod}',
         data: {'method': ApiMethods.listAuths, 'session_id': _sessionId},
-        options: Options(
-          validateStatus: (status) => status! < 600, // Принимаем все статусы
-        ),
+        options: Options(validateStatus: (status) => status! < 600),
       );
 
       print('''
@@ -104,7 +100,7 @@ class GeneratePlanRemoteDataSource {
     ''');
 
       if (response.statusCode == 200) {
-        return GetAllAuthsResponseDto.fromJson(response.data);
+        return response.data;
       }
 
       final errorMsg =

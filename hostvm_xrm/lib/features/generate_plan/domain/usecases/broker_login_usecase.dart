@@ -1,5 +1,5 @@
 import 'package:hostvm_xrm/features/generate_plan/domain/entities/broker_login_response_entity.dart';
-import 'package:hostvm_xrm/features/generate_plan/domain/repositories/generate_plan_repository.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/repositories/generate_plan_repository_interface.dart';
 
 class BrokerLoginUsecase {
   final GeneratePlanRepository repository;

@@ -1,6 +1,6 @@
-import 'package:hostvm_xrm/core/domain/session_response_entity.dart';
-import 'package:hostvm_xrm/core/domain/session_request_entity.dart';
-import 'package:hostvm_xrm/features/generate_plan/domain/repositories/generate_plan_repository.dart';
+import 'package:hostvm_xrm/core/domain/entity/session_response_entity.dart';
+import 'package:hostvm_xrm/core/domain/entity/session_request_entity.dart';
+import 'package:hostvm_xrm/features/generate_plan/domain/repositories/generate_plan_repository_interface.dart';
 
 class GetApiSessionUseCase {
   final GeneratePlanRepository repository;

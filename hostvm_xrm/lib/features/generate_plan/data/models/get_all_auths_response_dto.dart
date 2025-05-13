@@ -1,5 +1,3 @@
-import 'package:hostvm_xrm/features/generate_plan/domain/entities/authenticator_response_entity.dart';
-
 class GetAllAuthsResponseDto {
   final String status;
   final List<AuthenticatorDto> result;
@@ -69,26 +67,6 @@ class AuthenticatorDto {
       typeName: json['type_name'],
       usersCount: json['users_count'],
       visible: json['visible'],
-    );
-  }
-
-  AuthenticatorResponseEntity toEntity() {
-    return AuthenticatorResponseEntity(
-      comments: comments,
-      id: id,
-      mfaId: mfaId,
-      mfaName: mfaName,
-      name: name,
-      numericId: numericId,
-      permission: permission,
-      priority: priority,
-      smallName: smallName,
-      tags: tags,
-      type: type,
-      typeInfo: typeInfo,
-      typeName: typeName,
-      usersCount: usersCount,
-      visible: visible,
     );
   }
 }

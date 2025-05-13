@@ -1,6 +1,6 @@
 import 'package:hostvm_xrm/features/generate_plan/domain/entities/authenticator_response_entity.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/entities/broker_login_response_entity.dart';
-import 'package:hostvm_xrm/core/domain/session_response_entity.dart';
+import 'package:hostvm_xrm/core/domain/entity/session_response_entity.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/usecases/broker_login_usecase.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/usecases/get_all_auths_usecase.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/usecases/get_api_session_usecase.dart';
@@ -39,8 +39,8 @@ class GeneratePlanBloc extends Bloc<GeneratePlanEvent, GeneratePlanState> {
       );
       sessionId = sessionResponse.sessionId;
       emit(SessionInitialized(sessionResponse));
-    } catch (e) {
-      emit(GeneratePlanError(e.toString()));
+    } catch (e, stackTrace) {
+      emit(GeneratePlanError('Error: $e\nStack trace:\n$stackTrace'));
     }
   }
 
@@ -52,8 +52,8 @@ class GeneratePlanBloc extends Bloc<GeneratePlanEvent, GeneratePlanState> {
     try {
       final brokerLoginResponse = await brokerLoginUseCase();
       emit(BrokerLogged(brokerLoginResponse));
-    } catch (e) {
-      emit(GeneratePlanError(e.toString()));
+    } catch (e, stackTrace) {
+      emit(GeneratePlanError('Error: $e\nStack trace:\n$stackTrace'));
     }
   }
 
@@ -65,8 +65,8 @@ class GeneratePlanBloc extends Bloc<GeneratePlanEvent, GeneratePlanState> {
     try {
       final getAllAuthsResponse = await getAllAuthsUseCase();
       emit(GotAllAuths(getAllAuthsResponse));
-    } catch (e) {
-      emit(GeneratePlanError(e.toString()));
+    } catch (e, stackTrace) {
+      emit(GeneratePlanError('Error: $e\nStack trace:\n$stackTrace'));
     }
   }
 }
