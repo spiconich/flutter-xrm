@@ -55,21 +55,9 @@ class GeneratePlanRepositoryImpl implements GeneratePlanRepository {
     return dtos.result
         .map(
           (authData) => AuthenticatorResponseEntity(
-            comments: authData.comments,
             id: authData.id,
-            mfaId: authData.mfaId,
-            mfaName: authData.mfaName,
             name: authData.name,
-            numericId: authData.numericId,
-            permission: authData.permission,
-            priority: authData.priority,
-            smallName: authData.smallName,
-            tags: authData.tags,
-            type: authData.type,
-            typeInfo: authData.typeInfo,
-            typeName: authData.typeName,
-            usersCount: authData.usersCount,
-            visible: authData.visible,
+            data: authData.data,
           ),
         )
         .toList();

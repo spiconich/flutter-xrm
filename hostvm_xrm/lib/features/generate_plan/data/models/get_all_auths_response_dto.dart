@@ -16,57 +16,13 @@ class GetAllAuthsResponseDto {
 }
 
 class AuthenticatorDto {
-  final String comments;
   final String id;
-  final String mfaId;
-  final String mfaName;
   final String name;
-  final int numericId;
-  final int permission;
-  final int priority;
-  final String smallName;
-  final List<dynamic> tags;
-  final String type;
-  final Map<String, dynamic> typeInfo;
-  final String typeName;
-  final int usersCount;
-  final bool visible;
+  final Map<String, dynamic> data;
 
-  AuthenticatorDto({
-    required this.comments,
-    required this.id,
-    required this.mfaId,
-    required this.mfaName,
-    required this.name,
-    required this.numericId,
-    required this.permission,
-    required this.priority,
-    required this.smallName,
-    required this.tags,
-    required this.type,
-    required this.typeInfo,
-    required this.typeName,
-    required this.usersCount,
-    required this.visible,
-  });
+  AuthenticatorDto({required this.id, required this.name, required this.data});
 
   factory AuthenticatorDto.fromJson(Map<String, dynamic> json) {
-    return AuthenticatorDto(
-      comments: json['comments'],
-      id: json['id'],
-      mfaId: json['mfa_id'],
-      mfaName: json['mfa_name'],
-      name: json['name'],
-      numericId: json['numeric_id'],
-      permission: json['permission'],
-      priority: json['priority'],
-      smallName: json['small_name'],
-      tags: json['tags'],
-      type: json['type'],
-      typeInfo: json['type_info'],
-      typeName: json['type_name'],
-      usersCount: json['users_count'],
-      visible: json['visible'],
-    );
+    return AuthenticatorDto(id: json['id'], name: json['name'], data: json);
   }
 }
