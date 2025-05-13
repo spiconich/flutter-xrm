@@ -4,6 +4,8 @@ import 'package:hostvm_xrm/features/generate_plan/data/models/broker_login_respo
 import 'package:hostvm_xrm/features/generate_plan/data/models/session_request_dto.dart';
 import 'package:hostvm_xrm/features/generate_plan/data/models/session_response_dto.dart';
 import 'package:hostvm_xrm/features/generate_plan/data/models/get_all_auths_response_dto.dart';
+import 'package:hostvm_xrm/core/constants/api_routes.dart';
+import 'package:hostvm_xrm/core/constants/api_methods.dart';
 
 class GeneratePlanRemoteDataSource {
   final Dio dio;
@@ -17,7 +19,7 @@ class GeneratePlanRemoteDataSource {
     try {
       print("Отправлен запрос на инициализацию сессии");
       final response = await dio.post(
-        '$flaskServerAddress:$flaskServerPort$apiInitSession',
+        '$flaskServerAddress:$flaskServerPort${ApiRoutes.apiInitSession}',
         data: authData.toJson(),
         options: Options(
           validateStatus: (status) => status! < 600, // Принимаем все статусы
@@ -41,15 +43,14 @@ class GeneratePlanRemoteDataSource {
   }
 
   Future<BrokerLoginResponseDto> brokerLogin() async {
-    const String methodName = "login";
     try {
       print(
-        "Отправлен запрос выполнения метода $methodName с session_id: $_sessionId",
+        "Отправлен запрос выполнения метода ${ApiMethods.login} с session_id: $_sessionId",
       );
 
       final response = await dio.post(
-        '$flaskServerAddress:$flaskServerPort$apiCallMethod',
-        data: {'method': methodName, 'session_id': _sessionId},
+        '$flaskServerAddress:$flaskServerPort${ApiRoutes.apiCallMethod}',
+        data: {'method': ApiMethods.login, 'session_id': _sessionId},
         options: Options(
           validateStatus: (status) => status! < 600, // Принимаем все статусы
         ),
@@ -82,15 +83,14 @@ class GeneratePlanRemoteDataSource {
   }
 
   Future<GetAllAuthsResponseDto> getAllAuths() async {
-    const String methodName = "list_auths";
     try {
       print(
-        "Отправлен запрос выполнения метода $methodName с session_id: $_sessionId",
+        "Отправлен запрос выполнения метода ${ApiMethods.listAuths} с session_id: $_sessionId",
       );
 
       final response = await dio.post(
-        '$flaskServerAddress:$flaskServerPort/api/call',
-        data: {'method': methodName, 'session_id': _sessionId},
+        '$flaskServerAddress:$flaskServerPort${ApiRoutes.apiCallMethod}',
+        data: {'method': ApiMethods.listAuths, 'session_id': _sessionId},
         options: Options(
           validateStatus: (status) => status! < 600, // Принимаем все статусы
         ),
