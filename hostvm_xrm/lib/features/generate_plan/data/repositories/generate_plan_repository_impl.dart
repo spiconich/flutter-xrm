@@ -1,7 +1,7 @@
 import 'package:hostvm_xrm/features/generate_plan/domain/entities/authenticator_response_entity.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/entities/broker_login_response_entity.dart';
-import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_response_entity.dart';
-import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_request_entity.dart';
+import 'package:hostvm_xrm/core/domain/session_response_entity.dart';
+import 'package:hostvm_xrm/core/domain/session_request_entity.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/repositories/generate_plan_repository.dart';
 import 'package:hostvm_xrm/features/generate_plan/data/datasources/generate_plan_remote_data_source.dart';
 import 'package:hostvm_xrm/features/generate_plan/data/models/session_request_dto.dart';

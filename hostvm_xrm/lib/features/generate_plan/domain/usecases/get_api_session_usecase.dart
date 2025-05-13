@@ -1,5 +1,5 @@
-import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_response_entity.dart';
-import 'package:hostvm_xrm/features/generate_plan/domain/entities/session_request_entity.dart';
+import 'package:hostvm_xrm/core/domain/session_response_entity.dart';
+import 'package:hostvm_xrm/core/domain/session_request_entity.dart';
 import 'package:hostvm_xrm/features/generate_plan/domain/repositories/generate_plan_repository.dart';
 
 class GetApiSessionUseCase {
