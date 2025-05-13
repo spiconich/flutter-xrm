@@ -17,7 +17,7 @@ class GeneratePlanRemoteDataSource {
     try {
       print("Отправлен запрос на инициализацию сессии");
       final response = await dio.post(
-        '$flaskServerAddress:$flaskServerPort/api/init_session',
+        '$flaskServerAddress:$flaskServerPort$apiInitSession',
         data: authData.toJson(),
         options: Options(
           validateStatus: (status) => status! < 600, // Принимаем все статусы
@@ -48,8 +48,8 @@ class GeneratePlanRemoteDataSource {
       );
 
       final response = await dio.post(
-        '$flaskServerAddress:$flaskServerPort/api/call',
-        data: {'method': 'login', 'session_id': _sessionId},
+        '$flaskServerAddress:$flaskServerPort$apiCallMethod',
+        data: {'method': methodName, 'session_id': _sessionId},
         options: Options(
           validateStatus: (status) => status! < 600, // Принимаем все статусы
         ),
@@ -90,7 +90,7 @@ class GeneratePlanRemoteDataSource {
 
       final response = await dio.post(
         '$flaskServerAddress:$flaskServerPort/api/call',
-        data: {'method': 'list_auths', 'session_id': _sessionId},
+        data: {'method': methodName, 'session_id': _sessionId},
         options: Options(
           validateStatus: (status) => status! < 600, // Принимаем все статусы
         ),
