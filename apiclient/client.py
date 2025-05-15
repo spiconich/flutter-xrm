@@ -212,21 +212,22 @@ class Client:
 
 #Providers
 
-    def create_static_provider(self, name: str, comments: str='', tags: list=[], config: str='', **kwargs):
+    def create_static_provider(self, name: str='', comments: str='', tags: list=[], config: str='', **kwargs):
         '''Создание сервис-провайдера Static IP Machines'''
         data = {
-            'name': kwargs.get('name', name),
+            'name': name,
             'type': 'PhysicalMachinesServiceProvider',
-            'comments': kwargs.get('comments', comments),
-            'tags': kwargs.get('tags', tags),
-            'config': kwargs.get('config', config),
+            'comments': comments,
+            'tags': tags,
+            'config': config,
         }
+        data.update(kwargs)
         return self._request('providers', 'PUT', body=json.dumps(data))
 
     def create_staticmultiple_service(
         self,
-        provider_id: str,
-        name: str,
+        provider_id,
+        name: str='',
         comments: str='',
         tags: list=[],
         iplist: list=[],
@@ -239,19 +240,22 @@ class Client:
     ):
         '''Создание базового сервиса Static Multiple IP'''
         data = {
-            'name': kwargs.get('name', name),
+            #TODO: проверить влияние наличия этого параметра
+            'provider_id':provider_id,
+            'name': name,
             'type': 'IPMachinesService',
-            'comments': kwargs.get('comments', comments),
+            'comments': comments,
             'data_type': 'IPMachinesService',
-            'tags': kwargs.get('tags', tags),
+            'tags': tags,
             'proxy_id': '-1',
-            'ipList': kwargs.get('iplist', iplist),
-            'token': kwargs.get('token', token),
-            'port': kwargs.get('port', port),
-            'skipTimeOnFailure': kwargs.get('skipTimeOnFailure', skipTimeOnFailure),
-            'maxSessionForMachine': kwargs.get('maxSessionForMachine', maxSessionForMachine),
-            'lockByExternalAccess': kwargs.get('lockByExternalAccess', lockByExternalAccess),
+            'ipList': iplist,
+            'token': token,
+            'port': port,
+            'skipTimeOnFailure': skipTimeOnFailure,
+            'maxSessionForMachine': maxSessionForMachine,
+            'lockByExternalAccess': lockByExternalAccess,
         }
+        data.update(kwargs)
         return self._request(
             'providers/{0}/services'.format(provider_id),
             'PUT',
@@ -285,12 +289,12 @@ class Client:
 
     def create_ad_auth(
         self,
-        name: str,
-        label: str,
-        host: str,
-        username: str,
-        password: str,
-        ldapBase: str,
+        name: str='',
+        label: str='',
+        host: str='',
+        username: str='',
+        password: str='',
+        ldapBase: str='',
         comments: str='',
         tags: list=[],
         priority: int=1,
@@ -304,61 +308,63 @@ class Client:
     ):
         '''Создание аутентификатора Active Directory'''
         data = {
-            'name': kwargs.get('name', name),
-            'small_name': kwargs.get('small_name', label),
-            'host': kwargs.get('host', host),
-            'username': kwargs.get('username', username),
-            'password': kwargs.get('password', password),
-            'ldapBase': kwargs.get('ldapBase', ldapBase),
-            'comments': kwargs.get('comments', comments),
-            'tags': kwargs.get('tags', tags),
-            'priority': kwargs.get('priority', priority),
-            'ssl': kwargs.get('ssl', ssl),
-            'timeout': str(kwargs.get('timeout', timeout)),
-            'groupBase': kwargs.get('groupBase', groupBase),
-            'defaultDomain': kwargs.get('defaultDomain', defaultDomain),
-            'nestedGroups': kwargs.get('nestedGroups', nestedGroups),
+            'name': name,
+            'small_name': label,
+            'host': host,
+            'username': username,
+            'password': password,
+            'ldapBase': ldapBase,
+            'comments': comments,
+            'tags': tags,
+            'priority': priority,
+            'ssl': ssl,
+            'timeout': str(timeout),
+            'groupBase': groupBase,
+            'defaultDomain': defaultDomain,
+            'nestedGroups': nestedGroups,
             'data_type': 'ActiveDirectoryAuthenticator',
-            'visible': kwargs.get('visible', visible)
+            'visible': visible
         }
+        data.update(kwargs)
         return self._request('authenticators', 'PUT', body=json.dumps(data))
 
     def create_internal_auth(
         self,
-        name: str,
-        comments: str,
-        tags: list,
-        priority: int,
-        label: str,
-        differentForEachHost: bool,
-        reverseDns: bool,
-        acceptProxy: bool,
-        visible: bool,
+        name: str='',
+        comments: str='',
+        tags: list=[],
+        priority: int=1,
+        label: str='',
+        differentForEachHost: bool= False,
+        reverseDns: bool= False,
+        acceptProxy: bool= False,
+        visible: bool= True,
         **kwargs
     ):
         '''Создание аутентификатора Internal Database'''
         data = {
-            'name': kwargs.get('name', name),
-            'comments': kwargs.get('comments', comments),
-            'tags': kwargs.get('tags', tags),
-            'priority': str(kwargs.get('priority', priority)),
-            'small_name': kwargs.get('small_name', label),
-            'differentForEachHost': kwargs.get('differentForEachHost', differentForEachHost),
-            'reverseDns': kwargs.get('reverseDns', reverseDns),
-            'acceptProxy': kwargs.get('acceptProxy', acceptProxy),
+            'name': name,
+            'comments': comments,
+            'tags': tags,
+            'priority': str(priority),
+            'small_name': label,
+            'differentForEachHost': differentForEachHost,
+            'reverseDns': reverseDns,
+            'acceptProxy': acceptProxy,
             'data_type': 'InternalDBAuth',
-            'visible': kwargs.get('visible', visible)
+            'visible': visible
         }
+        data.update(kwargs)
         return self._request('authenticators', 'PUT', body=json.dumps(data))
 
     def create_regexldap_auth(
         self,
-        name: str,
-        label: str,
-        host: str,
-        username: str,
-        password: str,
-        ldapBase: str,
+        name: str='',
+        label: str='',
+        host: str='',
+        username: str='',
+        password: str='',
+        ldapBase: str='',
         comments: str='',
         tags: list=[],
         priority: int=1,
@@ -375,36 +381,37 @@ class Client:
     ):
         '''Создание аутентификатора Regex LDAP'''
         data = {
-            'name': kwargs.get('name', name),
-            'small_name': kwargs.get('small_name', label),
-            'host': kwargs.get('host', host),
-            'username': kwargs.get('username', username),
-            'password': kwargs.get('password', password),
-            'ldapBase': kwargs.get('ldapBase', ldapBase),
-            'comments': kwargs.get('comments', comments),
-            'tags': kwargs.get('tags', tags),
-            'priority': kwargs.get('priority', priority),
-            'port': str(kwargs.get('port', port)),
-            'ssl': kwargs.get('ssl', ssl),
-            'timeout': str(kwargs.get('timeout', timeout)),
-            'userClass': kwargs.get('userClass', userClass),
-            'userIdAttr': kwargs.get('userIdAttr', userIdAttr),
-            'groupNameAttr': kwargs.get('groupNameAttr', groupNameAttr),
-            'userNameAttr': kwargs.get('userNameAttr', userNameAttr),
-            'altClass': kwargs.get('altClass', altClass),
+            'name': name,
+            'small_name': label,
+            'host': host,
+            'username': username,
+            'password': password,
+            'ldapBase': ldapBase,
+            'comments': comments,
+            'tags': tags,
+            'priority': priority,
+            'port': str(port),
+            'ssl': ssl,
+            'timeout': str(timeout),
+            'userClass': userClass,
+            'userIdAttr': userIdAttr,
+            'groupNameAttr': groupNameAttr,
+            'userNameAttr': userNameAttr,
+            'altClass': altClass,
             'data_type': 'RegexLdapAuthenticator',
-            'visible': kwargs.get('visible', visible)
+            'visible': visible
         }
+        data.update(kwargs)
         return self._request('authenticators', 'PUT', body=json.dumps(data))
 
     def create_simpleldap_auth(
         self,
-        name: str,
-        label: str,
-        host: str,
-        username: str,
-        password: str,
-        ldapBase: str,
+        name: str='',
+        label: str='',
+        host: str='',
+        username: str='',
+        password: str='',
+        ldapBase: str='',
         comments: str='',
         tags: list=[],
         priority: int=1,
@@ -418,43 +425,44 @@ class Client:
         memberAttr: str='memberUid',
         userNameAttr: str='uid',
         visible: bool=True,
-        **kwargs
+        **kwargs,
     ):
         '''Создание аутентификатора Simple LDAP'''
         data = {
-            'name': kwargs.get('name', name),
-            'small_name': kwargs.get('small_name', label),
-            'host': kwargs.get('host', host),
-            'username': kwargs.get('username', username),
-            'password': kwargs.get('password', password),
-            'ldapBase': kwargs.get('ldapBase', ldapBase),
-            'comments': kwargs.get('comments', comments),
-            'tags': kwargs.get('tags', tags),
-            'priority': kwargs.get('priority', priority),
-            'port': str(kwargs.get('port', port)),
-            'ssl': kwargs.get('ssl', ssl),
-            'timeout': str(kwargs.get('timeout', timeout)),
-            'userClass': kwargs.get('userClass', userClass),
-            'groupClass': kwargs.get('groupClass', groupClass),
-            'userIdAttr': kwargs.get('userIdAttr', userIdAttr),
-            'groupIdAttr': kwargs.get('groupIdAttr', groupIdAttr),
-            'memberAttr': kwargs.get('memberAttr', memberAttr),
-            'userNameAttr': kwargs.get('userNameAttr', userNameAttr),
+            'name': name,
+            'small_name': label,
+            'host': host,
+            'username': username,
+            'password': password,
+            'ldapBase': ldapBase,
+            'comments': comments,
+            'tags': tags,
+            'priority': priority,
+            'port': str(port),
+            'ssl': ssl,
+            'timeout': str(timeout),
+            'userClass': userClass,
+            'groupClass': groupClass,
+            'userIdAttr': userIdAttr,
+            'groupIdAttr': groupIdAttr,
+            'memberAttr': memberAttr,
+            'userNameAttr': userNameAttr,
             'data_type': 'SimpleLdapAuthenticator',
-            'visible': kwargs.get('visible', visible)
+            'visible': visible
         }
+        data.update(kwargs)
         return self._request('authenticators', 'PUT', body=json.dumps(data))
 
     def create_saml_auth(
         self,
-        name: str,
-        label: str,
-        privateKey: str,
-        serverCertificate: str,
-        idpMetadata: str,
-        userNameAttr: str,
-        groupNameAttr: str,
-        realNameAttr: str,
+        name: str='',
+        label: str='',
+        privateKey: str='',
+        serverCertificate: str='',
+        idpMetadata: str='',
+        userNameAttr: str='',
+        groupNameAttr: str='',
+        realNameAttr: str='',
         comments: str='',
         tags: list=[],
         priority: int=1,
@@ -466,29 +474,30 @@ class Client:
     ):
         '''Создание аутентификатора SAML'''
         data = {
-            'name': kwargs.get('name', name),
-            'small_name': kwargs.get('small_name', label),
-            'privateKey': kwargs.get('privateKey', privateKey),
-            'serverCertificate': kwargs.get('serverCertificate', serverCertificate),
-            'idpMetadata': kwargs.get('idpMetadata', idpMetadata),
-            'userNameAttr': kwargs.get('userNameAttr', userNameAttr),
-            'groupNameAttr': kwargs.get('groupNameAttr', groupNameAttr),
-            'realNameAttr': kwargs.get('realNameAttr', realNameAttr),
-            'comments': kwargs.get('comments', comments),
-            'tags': kwargs.get('tags', tags),
-            'priority': kwargs.get('priority', priority),
-            'entityID': kwargs.get('entityID', entityID),
-            'usePassword': kwargs.get('usePassword', usePassword),
-            'pwdAttr': kwargs.get('pwdAttr', pwdAttr),
+            'name': name,
+            'small_name': label,
+            'privateKey': privateKey,
+            'serverCertificate': serverCertificate,
+            'idpMetadata': idpMetadata,
+            'userNameAttr': userNameAttr,
+            'groupNameAttr': groupNameAttr,
+            'realNameAttr': realNameAttr,
+            'comments': comments,
+            'tags': tags,
+            'priority': priority,
+            'entityID': entityID,
+            'usePassword': usePassword,
+            'pwdAttr': pwdAttr,
             'data_type': 'SAML20Authenticator',
-            'visible': kwargs.get('visible', visible)
+            'visible': visible
         }
+        data.update(kwargs)
         return self._request('authenticators', 'PUT', body=json.dumps(data))
 
     def create_auth_group(
         self,
-        auth_id: str,
-        name: str,
+        auth_id: str='',
+        name: str='',
         comments: str = '',
         state: str = 'A',
         meta_if_any: bool = False,
@@ -498,12 +507,13 @@ class Client:
         '''Добавление группы в аутентификатор'''
         data = {
             'type': 'group',
-            'name': kwargs.get('name', name),
-            'comments': kwargs.get('comments', comments),
-            'state': kwargs.get('state', state),
-            'meta_if_any': kwargs.get('meta_if_any', meta_if_any),
-            'pools': kwargs.get('pools', pools)
+            'name': name,
+            'comments': comments,
+            'state': state,
+            'meta_if_any': meta_if_any,
+            'pools': pools
         }
+        data.update(kwargs)
         return self._request(
             'authenticators/{}/groups'.format(auth_id),
             'PUT',
@@ -512,8 +522,8 @@ class Client:
 
     def create_auth_user(
         self,
-        auth_id: str,
-        username: str,
+        auth_id: str='',
+        username: str='',
         realname: str = '',
         comments: str = '',
         state: str = 'A',
@@ -523,7 +533,7 @@ class Client:
         **kwargs
     ):
         '''Добавление пользователя в аутентификатор'''
-        role = kwargs.get('role', role).lower()
+        role = role.lower()
         valid_role = {'admin', 'staff', 'user'}
         staff_member = False
         is_admin = False
@@ -535,17 +545,18 @@ class Client:
         elif role == 'staff':
             staff_member = True
         data = {
-            'name': kwargs.get('name', username),
-            'real_name': kwargs.get('real_name', realname),
-            'comments': kwargs.get('comments', comments),
-            'state': kwargs.get('state', state),
+            'name': username,
+            'real_name': realname,
+            'comments': comments,
+            'state': state,
             'staff_member': staff_member,
             'is_admin': is_admin,
-            'groups': kwargs.get('groups', groups),
+            'groups': groups,
             'role': role,
         }
-        if password or 'password' in kwargs:
-            data['password'] = kwargs.get('password', password)
+        data.update(kwargs)
+        if password:
+            data['password'] = password
         return self._request(
             'authenticators/{}/users'.format(auth_id),
             'PUT',
@@ -689,8 +700,8 @@ class Client:
 
     def create_pool(
         self,
-        name: str,
-        service_id: str,
+        name: str='',
+        service_id: str='',
         osmanager_id: str = None,
         short_name: str = '',
         comments: str = '',
@@ -711,32 +722,32 @@ class Client:
         **kwargs
     ):
         '''Создание нового пула'''
-        image_id = '-1' if kwargs.get('image_id', image_id) is None else str(kwargs.get('image_id', image_id))
-        pool_group_id = '-1' if kwargs.get('pool_group_id', pool_group_id) is None else str(kwargs.get('pool_group_id', pool_group_id))
-        account_id = '-1' if kwargs.get('account_id', account_id) is None else str(kwargs.get('account_id', account_id))
+        if image_id is None: image_id = '-1'
+        if pool_group_id is None: pool_group_id = '-1'
+        if account_id is None: account_id = '-1'
 
         data = {
-            'name': kwargs.get('name', name),
-            'short_name': kwargs.get('short_name', short_name),
-            'comments': kwargs.get('comments', comments),
-            'tags': kwargs.get('tags', tags),
-            'service_id': kwargs.get('service_id', service_id),
-            'osmanager_id': kwargs.get('osmanager_id', osmanager_id),
+            'name': name,
+            'short_name': short_name,
+            'comments': comments,
+            'tags': tags,
+            'service_id': service_id,
+            'osmanager_id': osmanager_id,
             'image_id': image_id,
             'pool_group_id': pool_group_id,
-            'initial_srvs': kwargs.get('initial_srvs', initial_srvs),
-            'cache_l1_srvs': kwargs.get('cache_l1_srvs', cache_l1_srvs),
-            'cache_l2_srvs': kwargs.get('cache_l2_srvs', cache_l2_srvs),
-            'max_srvs': kwargs.get('max_srvs', max_srvs),
-            'show_transports': kwargs.get('show_transports', show_transports),
-            'visible': kwargs.get('visible', visible),
-            'allow_users_remove': kwargs.get('allow_users_remove', allow_users_remove),
-            'allow_users_reset': kwargs.get('allow_users_reset', allow_users_reset),
-            'ignores_unused': kwargs.get('ignores_unused', ignores_unused),
+            'initial_srvs': initial_srvs,
+            'cache_l1_srvs': cache_l1_srvs,
+            'cache_l2_srvs': cache_l2_srvs,
+            'max_srvs': max_srvs,
+            'show_transports': show_transports,
+            'visible': visible,
+            'allow_users_remove': allow_users_remove,
+            'allow_users_reset': allow_users_reset,
+            'ignores_unused': ignores_unused,
             'account_id': account_id,
-            'calendar_message': kwargs.get('calendar_message', calendar_message)
+            'calendar_message': calendar_message
         }
-
+        data.update(kwargs)
         return self._request('servicespools','PUT', body=json.dumps(data))
 
     def delete_pool(self, pool_id: str):
@@ -792,15 +803,7 @@ class Client:
 
 #Config
 
-    def set_permissions(
-        self, 
-        cls: str, 
-        uuid: str, 
-        perm_type: str, 
-        entity_id: str, 
-        perm: int,
-        **kwargs
-    ):
+    def set_permissions(self, cls: str, uuid: str, perm_type: str, entity_id: str, perm: int, **kwargs):
         '''Set permissions for an object
 
         Args:
@@ -824,35 +827,24 @@ class Client:
                 32 - read
                 64 - manage
         '''
-        perm_type = kwargs.get('perm_type', perm_type)
         if perm_type not in ['users', 'groups']:
             raise ValueError('Invalid permission type: {}'.format(perm_type))
-        
         perms = {
             '32': '1',
             '64': '2'
         }
-        data = {'perm': perms.get(str(kwargs.get('perm', perm)), None)}
+        data = {'perm': perms.get(str(perm), None)}
+        
         if not data['perm']:
-            raise ValueError('Invalid permission: {}'.format(kwargs.get('perm', perm)))
-            
-        return self._request(
-            'permissions/{}/{}/{}/add/{}'.format(
-                kwargs.get('cls', cls),
-                kwargs.get('uuid', uuid),
-                perm_type,
-                kwargs.get('entity_id', entity_id)
-            ), 
-            'PUT', 
-            body=json.dumps(data)
-        )
+            raise ValueError('Invalid permission: {}'.format(perm))
+        return self._request('permissions/{}/{}/{}/add/{}'.format(cls, uuid, perm_type, entity_id), 'PUT', body=json.dumps(data))
 
     def create_actor_token(
         self,
-        token: str,
-        ip: str,
-        hostname: str,
-        mac: str, 
+        token: str='',
+        ip: str='',
+        hostname: str='',
+        mac: str='',
         log_level: str = 'ERROR',
         pre_command: str = '',
         post_command: str = '',
@@ -870,17 +862,18 @@ class Client:
             'ERROR': 2,
             'FATAL': 3
         }
-        log_level = levels.get(str(kwargs.get('log_level', log_level)), None)
+        log_level = levels.get(str(log_level), None)
         if not log_level:
-            raise ValueError('Invalid log level: {}'.format(kwargs.get('log_level', log_level)))    
+            raise ValueError('Invalid log level: {}'.format(log_level))
         data = {
-            'token': kwargs.get('token', token),
-            'ip': kwargs.get('ip', ip),
-            'hostname': kwargs.get('hostname', hostname),
-            'mac': kwargs.get('mac', mac),
+            'token': token,
+            'ip': ip,
+            'hostname': hostname,
+            'mac': mac, 
             'log_level': log_level,
-            'pre_command': kwargs.get('pre_command', pre_command),
-            'post_command': kwargs.get('post_command', post_command),
-            'runonce_command': kwargs.get('runonce_command', runonce_command)
+            'pre_command': pre_command,
+            'post_command': post_command,
+            'runonce_command': runonce_command
         }
+        data.update(kwargs)
         return self._request('actortokens', 'PUT', body=json.dumps(data))
